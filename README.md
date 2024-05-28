@@ -1,7 +1,8 @@
 # nivel-rio-guaiba
-Projeto de aplicativo para Android para mostrar o nível do rio Guaiba em Porto Alegre
+Projeto de aplicativo para Android para mostrar o nível do rio Guaiba em Porto Alegre.
+
 Em Maio de 2024 Porto Alegre sofreu com enchentes causando muitos estragos, 
-foi onde nasceu a ideia de criar esse aplicativo para Android de forma gratuíta e de uso livre, sem fins comerciais.
+foi onde nasceu a ideia de criar esse aplicativo para Android de forma gratuíta e de uso livre, sem fins lucrativos.
 
 A primeira versão se baseou no site de autoria de Felipe R. Almeida: 
 https://nivelguaiba.com
