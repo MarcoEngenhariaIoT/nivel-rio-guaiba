@@ -11,3 +11,7 @@ O aplicativo coleta dados do nível do rio Guaíba provenientes da estação do 
 https://www.snirh.gov.br/hidroweb/apresentacao
 
 Mostrando na tela inicial o nível e o horário da última informação coletada.
+
+O aplicativo foi criado no Mit App Inventor
+Bando de dados feito no realtime database do Firebase.
+A coleta de dados foi feito em python.
