@@ -1,7 +1,8 @@
 #Projeto Nível Rio Guíba App
 #Eng. Marco Aurélio Machado
 #marcoengenhariaiot@gmail.com
-#Versão 1.0.0 27/05/2024
+#Versão 1.0.0 27/05/2024 "Versão inicial"
+#Versão 1.0.1 28/05/2024 "Alterado o formado do envio do valor do nível de string para decimal e sem o "m" "
 #Uso do código é livre desde que seja citado a minha autoria.
 
 import requests
@@ -39,7 +40,17 @@ def extrair_nivel():
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     nivel = soup.find('h1').text.strip()  # Extrai o valor do nível
+    print("string", nivel)
+    nivel = converter_string_para_decimal(nivel)
+    print("decimal", nivel)
     return nivel
+
+# Função para converter de string para decimal
+def converter_string_para_decimal(string):
+    string = string.replace(" m", "")
+    string = string.replace(",", ".")
+    valor_decimal = float(string)    
+    return valor_decimal
 
 # Função para inserir o nível no banco de dados SQLite
 def inserir_nivel(nivel):
@@ -51,7 +62,7 @@ def enviar_para_firebase(nivel):
     timestamp = time.strftime('%H:%M %d-%m-%Y')
     ref = db.reference()  # Usar uma chave fixa para armazenar o valor mais recente
     ref.set({
-        'nivel': ' "' + nivel + '" ',
+        'nivel': nivel,
         'timestamp': ' "' + timestamp + '" '
     })
 
