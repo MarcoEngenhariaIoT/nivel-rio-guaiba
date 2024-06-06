@@ -1,9 +1,15 @@
 #Projeto Nível Rio Guíba App
 #Eng. Marco Aurélio Machado
 #marcoengenhariaiot@gmail.com
-#Versão 1.0.0 27/05/2024 "Versão inicial"
-#Versão 1.0.1 28/05/2024 "Alterado o formado do envio do valor do nível de string para decimal e sem o "m" "
 #Uso do código é livre desde que seja citado a minha autoria.
+#Versão 1.0.0 27/05/2024 
+    #Versão inicial
+#Versão 1.0.1 28/05/2024 
+    #Alterado o formado do envio do valor do nível de string para decimal e sem o "m" 
+#Versão 1.1.0 05/06/2024 
+    #Incluido o envio de msg do APP para os Labels pois podem mudar esses parâmetros
+    #Incluido as variáveis de cota de alerta e inundação.
+    #Com essas mudanças não é necessário alterar esses paâmetros no aplicativo, se muda apenas nesse código.
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,6 +17,19 @@ import sqlite3
 import time
 import firebase_admin
 from firebase_admin import credentials, db
+
+#valores das cotas
+cotaAlerta = 3.15
+cotaInundacao = 3.60
+print("Cota de alerta :", cotaAlerta)
+print("Cota de inundação :", cotaInundacao)
+
+# Mensagens do APP
+labelVersao = "Versão 1.1.0"
+labelCotaAlerta = "Cota de alerta 3.15m"
+labelCotaInundacao = "Cota de inundação 3.60m"
+labelEstacao = "Estação: Cais Mauá C6 / Gasômetro"
+labelFree = "Aplicativo experimental de uso livre sem fins lucrativos, os dados coletados podem conter erros e não nos responsabilizamos pelo mau uso dessas informações, para tomada de decisão recomendamos consultar diretamente a fonte confiável com o SNIRH/ANA."
 
 # URL da página a ser monitorada
 url = 'https://nivelguaiba.com/'
@@ -39,10 +58,8 @@ firebase_admin.initialize_app(cred, {
 def extrair_nivel():
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
-    nivel = soup.find('h1').text.strip()  # Extrai o valor do nível
-    print("string", nivel)
+    nivel = soup.find('h1').text.strip()  # Extrai o valor do nível    
     nivel = converter_string_para_decimal(nivel)
-    print("decimal", nivel)
     return nivel
 
 # Função para converter de string para decimal
@@ -63,7 +80,14 @@ def enviar_para_firebase(nivel):
     ref = db.reference()  # Usar uma chave fixa para armazenar o valor mais recente
     ref.set({
         'nivel': nivel,
-        'timestamp': ' "' + timestamp + '" '
+        'timestamp': ' "' + timestamp + '" ',
+        'labelVersao': ' "' + labelVersao + '" ',
+        'labelCotaAlerta': ' "' + labelCotaAlerta + '" ',
+        'labelCotaInundacao': ' "' + labelCotaInundacao + '" ',
+        'labelEstacao': ' "' + labelEstacao + '" ',
+        'labelFree': ' "' + labelFree + '" ',
+        'gAlerta': cotaAlerta,
+        'gInundacao': cotaInundacao
     })
 
 # Inicializar o valor anterior
@@ -86,5 +110,5 @@ while True:
     # Esperar por um tempo antes de verificar novamente (por exemplo, a cada 15 minutos)
     time.sleep(900)
 
-# Fechar a conexão com o banco de dados (em um caso real, você pode precisar de um encerramento mais elegante)
+# Fechar a conexão com o banco de dados
 conn.close()
