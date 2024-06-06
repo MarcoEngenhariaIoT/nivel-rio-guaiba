@@ -10,6 +10,8 @@
     #Incluido o envio de msg do APP para os Labels pois podem mudar esses parâmetros
     #Incluido as variáveis de cota de alerta e inundação.
     #Com essas mudanças não é necessário alterar esses paâmetros no aplicativo, se muda apenas nesse código.
+#Versão 1.1.1 06/06/2024 
+    #Correção bug: Ficava com a msg "obtendo dados..." mesmo depois de carregar os dados.
 
 import requests
 from bs4 import BeautifulSoup
@@ -25,7 +27,7 @@ print("Cota de alerta :", cotaAlerta)
 print("Cota de inundação :", cotaInundacao)
 
 # Mensagens do APP
-labelVersao = "Versão 1.1.0"
+labelVersao = "Versão 1.1.1"
 labelCotaAlerta = "Cota de alerta 3.15m"
 labelCotaInundacao = "Cota de inundação 3.60m"
 labelEstacao = "Estação: Cais Mauá C6 / Gasômetro"
