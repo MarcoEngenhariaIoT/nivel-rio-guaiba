@@ -51,7 +51,7 @@ cursor.execute('''
 
 # Inicializar o Firebase
 # Crie um banco de dados no realtime database e salve o token na mesma pasta do nivel.py e substitua o caminho na linha abaixo
-cred = credentials.Certificate(r'C:\Users\Marco\Dropbox\Engenharia de Software\3° Sem\Banco de dados\trabalho\guaiba-ddf2d-firebase-adminsdk-sy51j-aadec8717b.json')
+cred = credentials.Certificate(r'/home/...caminho.../guaiba-ddf2d-firebase-adminsdk-sy51j-aadec8717b.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://guaiba-ddf2d-default-rtdb.firebaseio.com'
 })
